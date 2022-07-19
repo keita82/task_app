@@ -1,0 +1,40 @@
+<div class="main_container">
+    <div class="information">
+        <h2>スケジュール編集</h2>
+    </div>
+    <%= form_with model: @task do |t| %>
+    <table>
+        <tbody>
+            <tr>
+                <th><%= t.label :title, "タイトル" %></th>
+                <td><%= t.text_field :title %></td>
+            </tr>
+            <tr>
+                <th><%= t.label :start_date, "開始日" %></th>
+                <td><%= t.date_field :start_date %></td>
+            </tr>
+            <tr>
+                <th><%= t.label :end_date, "終了日" %></th>
+                <td><%= t.date_field :end_date %></td>
+            </tr>
+            <tr>
+                <th><%= t.label :all_day, "終日" %></th>
+                <td><%= t.check_box :all_day %><br>終日の場合はチェックを入れます</td>
+            </tr>
+            <tr>
+                <th><%= t.label :memo, "スケジュールメモ" %></th>
+                <td><%= t.text_area :memo, class: "posts-content" %></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><%= t.submit "スケジュールの編集を完了する" %></li>
+        <li><%= link_to "スケジュール一覧に戻る", :tasks %></li>
+    </ul>
+    <% end %>
+</div>
+<footer>
+    <h1>
+        現在の日時：<%= "#{@time.year}年 #{@time.month}月#{@time.day}日" %>
+    </h1>
+</footer>

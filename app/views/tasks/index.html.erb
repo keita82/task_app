@@ -1,0 +1,54 @@
+<div class="main_container">
+    <div class="information">
+        <h2>スケジュール一覧</h2>
+    </div>
+    <% if flash[:success] %>
+        <p class="alert alert__success"><%= flash[:success] %></p>
+    <% elsif flash[:delete] %>
+      <p class="alert alert__delete"><%= flash[:delete] %></p>
+    <% end %>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>タイトル</th>
+                <th>開始日</th>
+                <th>終了日</th>
+                <th>終日</th>
+                <th>スケジュール更新日時</th>
+                <th>確認</th>
+                <th>編集</th>
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @tasks.each do |task| %> 
+            <tr>
+                <td><%= task.id %></td>
+                <td><%= task.title %></td>
+                <td><%= task.start_date.to_s(:datetime_jp) %></td>
+                <td><%= task.end_date.to_s(:datetime_jp) %></td>
+                <td>
+                    <% if task.all_day == true %>
+                        <span>◯</span>
+                    <% else %>
+                        <span></span>
+                    <% end %>
+                </td>
+                <td><%= task.updated_at.to_s(:datetime_jp) %></td>
+                <td><%= link_to "確認", task_path(task.id) %></td>
+                <td><%= link_to "編集", edit_task_path(task.id) %></td>
+                <td><%= link_to "削除", task_path(task.id), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <p>
+        <%= link_to "スケジュール新規登録", :new_task %>
+    </p>
+</div>
+<footer>
+    <h1>
+        現在の日時：<%= "#{@time.year}年 #{@time.month}月#{@time.day}日" %> スケジュール合計：<%= @tasks.count %>
+    </h1>
+</footer>
